@@ -6,17 +6,28 @@ With these constraints in mind, the script uses phylogenetic diversity to pick t
 
 
 ## Script parameters
-- --tree TREE.nwk -- the input phylogenetic tree in newick format, must __not__ be dated and must be rooted. 
-- --size N -- the number of samples to retain in the subsampled tree
-- --repetitions R -- the number of subsampled trees to output
--  --output_dir NAME -- the path to the directory where the subsampled trees will be stored
+- --tree TREE           Path to the input phylogeny (rooted and NOT time-scaled) in newick format.
+- --metadata METADATA   Path to the metadata table containing location and date annotations, in a tab-delimited format.
+- --sep SEP             Separator used in the metadata and case tables. By default a tab-separated table is assumed.
+- --index_column INDEX_COLUMN
+                        number (starting from zero) of the index column (containing tree tip names) in the metadata table. By default is the first column (corresponding to the number 0)
+- --location_column LOCATION_COLUMN
+                        name of the column containing location annotations in the metadata table.
+- --date_column DATE_COLUMN
+                        name of the column containing date annotations in the metadata table.
+- --cases CASES         A tab-separated file with two columns. The first column lists the locations, while the second column contains the numbers of declared cases or proportions for the
+                        corresponding locations
+- --start_date START_DATE
+                        If specified, all the cases before this date will be included in all the sub-sampled data sets.
+- --size SIZE           Target size of the sub-sampled data set (in number of samples). By default, will be set to a half of the data set represented by the input tree.
+- --repetitions REPETITIONS Number of sub-samplings to perform. By default 1.
+- --output_dir OUTPUT_DIR
+                        Path to the directory where the sub-sampled results should be saved.
+- --min_cases MIN_CASES
+                        Minimum number of samples to retain for each location.
+- --date_precision {year,month,day}
+                        Precision for homogeneous subsampling over time within each location. By default (month) will aim at distributing selected location samples equally over months.
 
-
-- 
-- pandas, numpy, ete3 и hdx-python-country (например, с помощью pip3 install pandas numpy ete3 hdx-python-country). Дальше можно запускать скрипт вот так:
-
-python3 phylogenetic_diversity.py --nwk MPXV_gisaid_20221111_tree.nwk --cases cases.tab --repetitions 10 --output_dir subsampling
- 
 
 ## Installation
 To install geo_subsampler:

@@ -65,9 +65,9 @@ def remove_certain_leaves(tree, to_remove=lambda node: False):
 
 
 def calc_size_stats(df, N):
-    undersampled_countries = sorted(df[(df['sampled_cases'] / df['frequencies']) < N].index)
-    logging.info('{} countries ({}) are undersampled for the selected threshold {}.'
-                 .format(len(undersampled_countries), ', '.join(undersampled_countries), N))
+    undersampled_locs = sorted(df[(df['sampled_cases'] / df['frequencies']) < N].index)
+    logging.info('{} locations ({}) are undersampled for the selected threshold {}.'
+                 .format(len(undersampled_locs), ', '.join(undersampled_locs), N))
 
 
 def subsample_by_phylogenetic_diversity(tree, df, sampled_case_per_time_df, to_keep):
@@ -118,7 +118,8 @@ def main():
                         help='Path to the metadata table containing location and date annotations, '
                              'in a tab-delimited format.')
     parser.add_argument('--sep', type=str, default='\t',
-                        help='Separator used in the metadata and case tables. By default a tab-separated table is assumed.')
+                        help='Separator used in the metadata and case tables. '
+                             'By default a tab-separated table is assumed.')
     parser.add_argument('--index_column', type=int, default=0,
                         help='number (starting from zero) of the index column (containing tree tip names) '
                              'in the metadata table. '
@@ -135,17 +136,17 @@ def main():
                         help='If specified, all the cases before this date '
                              'will be included in all the sub-sampled data sets.')
     parser.add_argument('--size', default=0, type=int,
-                        help='Approximate size of the sub-sampled data set (in number of samples). '
+                        help='Target size of the sub-sampled data set (in number of samples). '
                              'By default, will be set to a half of the data set represented by the input tree.')
-    parser.add_argument('--repetitions', type=int, default=10,
-                        help='Number of sub-samplings to perform. By default 10.')
+    parser.add_argument('--repetitions', type=int, default=1,
+                        help='Number of sub-samplings to perform. By default 1.')
     parser.add_argument('--output_dir', type=str, required=True,
                         help='Path to the directory where the sub-sampled results should be saved.')
     parser.add_argument('--min_cases', type=int, default=0,
                         help='Minimum number of samples to retain for each location.')
     parser.add_argument('--date_precision', default=MONTH, choices=[YEAR, MONTH, DAY],
                         help='Precision for homogeneous subsampling over time within each location. '
-                             'By default (month) will aim at distributing selected country samples equally over months.')
+                             'By default (month) will aim at distributing selected location samples equally over months.')
     params = parser.parse_args()
 
     logging.getLogger().setLevel(level=logging.INFO)
@@ -185,36 +186,36 @@ def main():
         np.maximum(case_df.loc[kept_case_df.index, MIN_CASES], kept_case_df[CASES]))
     case_df[SUBSAMPLED_CASES] = case_df[MIN_CASES]
 
-    all_countries = set(case_df.index)
-    processed_countries = set()
+    all_locs = set(case_df.index)
+    processed_locs = set()
 
     while True:
-        todo_countries = list(all_countries - processed_countries)
-        freq_df = case_df.loc[todo_countries, [CASES]]
+        todo_locs = list(all_locs - processed_locs)
+        freq_df = case_df.loc[todo_locs, [CASES]]
         freq_df['frequencies'] = freq_df[CASES] / freq_df[CASES].sum()
-        case_df.loc[todo_countries, SUBSAMPLED_CASES] = \
+        case_df.loc[todo_locs, SUBSAMPLED_CASES] = \
             np.round(freq_df['frequencies']
-                     * (params.size - case_df.loc[list(processed_countries), SUBSAMPLED_CASES].sum()), 0).astype(int)
-        # If the min_cases is larger than the number of cases corresponding to this country's proportion,
+                     * (params.size - case_df.loc[list(processed_locs), SUBSAMPLED_CASES].sum()), 0).astype(int)
+        # If the min_cases is larger than the number of cases corresponding to this location's proportion,
         #   let's just take the min number of cases and be done with it.
-        # If the number of target subsampled cases is larger than the total number of sampled cases for thi country,
+        # If the number of target subsampled cases is larger than the total number of sampled cases for this location,
         #   let's just take them all and be done with it.
-        new_processed_countries = (set(case_df[case_df[SUBSAMPLED_CASES] <= case_df[MIN_CASES]].index) |
-                                   set(case_df[case_df[SUBSAMPLED_CASES] >= case_df[SAMPLED_CASES]].index))
+        new_processed_locs = (set(case_df[case_df[SUBSAMPLED_CASES] <= case_df[MIN_CASES]].index) |
+                              set(case_df[case_df[SUBSAMPLED_CASES] >= case_df[SAMPLED_CASES]].index))
         case_df[SUBSAMPLED_CASES] = np.minimum(np.maximum(case_df[SUBSAMPLED_CASES], case_df[MIN_CASES]),
                                                case_df[SAMPLED_CASES])
-        if processed_countries == new_processed_countries or new_processed_countries == all_countries \
+        if processed_locs == new_processed_locs or new_processed_locs == all_locs \
                 or case_df[SUBSAMPLED_CASES].sum() >= params.size:
             break
-        processed_countries = new_processed_countries
+        processed_locs = new_processed_locs
 
     while case_df[SUBSAMPLED_CASES].sum() < params.size:
-        loc = np.random.choice([_ for _ in all_countries
+        loc = np.random.choice([_ for _ in all_locs
                                 if case_df.loc[_, SUBSAMPLED_CASES] < case_df.loc[_, SAMPLED_CASES]], 1)[0]
         case_df.loc[loc, SUBSAMPLED_CASES] += 1
 
     while case_df[SUBSAMPLED_CASES].sum() > max(params.size, len(to_keep)):
-        loc = np.random.choice([_ for _ in all_countries
+        loc = np.random.choice([_ for _ in all_locs
                                 if case_df.loc[_, SUBSAMPLED_CASES] > case_df.loc[_, MIN_CASES]], 1)[0]
         case_df.loc[loc, SUBSAMPLED_CASES] -= 1
 
@@ -225,8 +226,8 @@ def main():
     sampled_case_per_time_df[MIN_CASES] = 0
 
     for location in case_df.index:
-        country_loc_df = df[df[params.location_column] == location]
-        loc_date_count_df = country_loc_df[[LOC_DATE, params.date_column]].groupby([LOC_DATE]).count()
+        loc_date_count_df = df[df[params.location_column] == location]
+        loc_date_count_df = loc_date_count_df[[LOC_DATE, params.date_column]].groupby([LOC_DATE]).count()
         loc_date_count_df.columns = [CASES]
         loc_date_count_df[MIN_CASES] = (
             loc_date_count_df.index.map(lambda _: len(kept_loc_df[kept_loc_df[LOC_DATE] == _])))
@@ -302,7 +303,7 @@ def parse_cases(csv, sep, sampled_case_df, size):
         case_df = pd.read_csv(csv, sep=sep, index_col=0)
         case_df.columns = [CASES]
 
-        # make sure that the countries in the declared and sampled case tables are the same
+        # make sure that the locations in the declared and sampled case tables are the same
         for _ in set(sampled_case_df.index) - set(case_df.index):
             print('No cases declared for {}, though some samples are present in the tree'.format(_))
             case_df.loc[_, CASES] = 0
