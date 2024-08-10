@@ -113,7 +113,7 @@ def main():
     parser = argparse.ArgumentParser(description='Subsampling of phylogenetic trees.')
 
     parser.add_argument('--tree', required=True, type=str,
-                        help='Path to the input phylogeny (rooted and NOT time-scaled) in newick format.')
+                        help='Path to the input phylogeny (NOT time-scaled) in newick format.')
     parser.add_argument('--metadata', required=True, type=str,
                         help='Path to the metadata table containing location and date annotations, '
                              'in a tab-delimited format.')
@@ -287,15 +287,16 @@ def main():
     sampled_case_per_time_df[[SAMPLED_CASES, SUBSAMPLED_CASES]] \
         .to_csv(os.path.join(params.output_dir, 'case_counts_per_time.tab'), sep='\t', index_label=LOC_DATE)
 
+    tree_name = os.path.splitext(os.path.basename(params.tree))[0]
     for i in range(params.repetitions):
         sampled_case_per_time_df['remove_cases'] = sampled_case_per_time_df[SAMPLED_CASES] \
                                                    - sampled_case_per_time_df[SUBSAMPLED_CASES]
         tree = remove_certain_leaves(read_tree(params.tree), lambda _: _.name not in tree_ids)
         tree = subsample_by_phylogenetic_diversity(tree, df, sampled_case_per_time_df, to_keep)
 
-        with open(os.path.join(params.output_dir, '{}.ids'.format(i)), 'w+') as f:
+        with open(os.path.join(params.output_dir, '{}.subsampled.{}.ids'.format(tree_name, i)), 'w+') as f:
             f.write('\n'.join(_.name for _ in tree))
-        tree.write(outfile=os.path.join(params.output_dir, '{}.nwk'.format(i)))
+        tree.write(outfile=os.path.join(params.output_dir, '{}.subsampled.{}.nwk'.format(tree_name, i)))
 
 
 def parse_cases(csv, sep, sampled_case_df, size):

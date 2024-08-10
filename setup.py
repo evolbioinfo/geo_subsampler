@@ -15,6 +15,8 @@ setup(
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Software Development',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
     ],
     version='0.1',
     description='Subsampling of rooted phylogenetic trees using phylogenetic diversity and location proportions.',
