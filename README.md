@@ -1,4 +1,4 @@
-# GEO subsampler
+# Geo subsampler
 
 Geo_subsampler subsamples a given phylogenetic tree to rebalance the samples at different locations 
 according to user-specified proportions. Moreover, for each location the kept samples are chosen 
@@ -62,7 +62,7 @@ The following geo_subsampler command subsamples the input tree according to the 
 in order to keep 1000 tips:
 
 ```bash
-geo_subsampler --tree example_data/covid.nwk --metadata example_data/metadata.tab \
+geo_subsample --tree example_data/covid.nwk --metadata example_data/metadata.tab \
 --location_column country --date_column "sampling date" --cases example_data/cases.tab \
 --output_dir example_data/results --size 1000
 ```
