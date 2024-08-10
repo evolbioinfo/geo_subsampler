@@ -306,14 +306,19 @@ def parse_cases(csv, sep, sampled_case_df, size):
 
         # make sure that the locations in the declared and sampled case tables are the same
         for _ in set(sampled_case_df.index) - set(case_df.index):
-            print('No cases declared for {}, though some samples are present in the tree'.format(_))
+            logging.warning('No cases declared for {}, though some samples are present in the tree'.format(_))
             case_df.loc[_, CASES] = 0
         case_df = case_df.loc[sampled_case_df.index, :]
+        if case_df[CASES].sum() < 2:
+            logging.warning('Seems like the proportions are given instead of declared case counts, '
+                            'we then gonna generate a case count according to these proportions.')
+            case_df[CASES] *= len(sampled_case_df) * sampled_case_df[CASES].sum()
+            case_df[CASES] = case_df[CASES].astype(int)
         # Update the declared cases with the sampled case figure if there are more sampled cases than the declared ones
         case_df = pd.concat([case_df, sampled_case_df]).groupby(level=0).max()
     else:
         case_df = pd.DataFrame(index=sampled_case_df.index)
-        case_df[CASES] = len(sampled_case_df)
+        case_df[CASES] = sampled_case_df[CASES].sum()
     case_df['frequencies'] = case_df[CASES] / case_df[CASES].sum()
     case_df[SAMPLED_CASES] = sampled_case_df.loc[case_df.index, CASES]
     calc_size_stats(case_df, size)

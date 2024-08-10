@@ -1,16 +1,16 @@
 loc_date	sampled_cases	subsampled_cases
 Algeria2020-03	3	2
 Argentina2020-03	3	2
-Australia2020-01	10	0
-Australia2020-02	20	1
+Australia2020-01	10	1
+Australia2020-02	20	0
 Australia2020-03	946	1
 Australia2020-04	73	0
 Austria2020-02	2	2
 Austria2020-03	19	2
 Belarus2020-03	2	2
 Belgium2020-02	2	2
-Belgium2020-03	308	5
-Belgium2020-04	77	8
+Belgium2020-03	308	6
+Belgium2020-04	77	7
 Brazil2020-02	5	5
 Brazil2020-03	43	43
 Cambodia2020-01	1	0
@@ -18,19 +18,19 @@ Canada2020-01	4	4
 Canada2020-02	6	6
 Canada2020-03	131	10
 Chile2020-03	7	7
-China2019-12	15	6
+China2019-12	15	5
 China2020-01	209	6
-China2020-02	197	5
+China2020-02	197	6
 China2020-03	6	6
 Colombia2020-03	2	2
-Croatia2020-03	7	0
+Croatia2020-03	7	1
 Czech Republic2020-02	1	1
 Czech Republic2020-03	24	1
 Czech Republic2020-04	1	0
 Democratic Republic of the Congo2020-03	38	0
 Democratic Republic of the Congo2020-04	4	0
-Denmark2020-02	2	1
-Denmark2020-03	319	2
+Denmark2020-02	2	2
+Denmark2020-03	319	1
 Ecuador2020-03	4	4
 Estonia2020-03	4	0
 Finland2020-01	1	1
@@ -71,8 +71,8 @@ Kuwait2020-03	7	3
 Latvia2020-03	10	0
 Lithuania2020-02	1	0
 Luxembourg2020-02	2	0
-Luxembourg2020-03	164	1
-Luxembourg2020-04	33	0
+Luxembourg2020-03	164	0
+Luxembourg2020-04	33	1
 Malaysia2020-02	6	1
 Malaysia2020-03	2	1
 Mexico2020-02	1	1
@@ -80,8 +80,8 @@ Mexico2020-03	13	10
 Nepal2020-01	1	0
 Netherlands2020-01	1	1
 Netherlands2020-02	8	4
-Netherlands2020-03	515	3
-Netherlands2020-04	27	4
+Netherlands2020-03	515	4
+Netherlands2020-04	27	3
 New Zealand2020-02	1	0
 New Zealand2020-03	7	0
 Nigeria2020-02	1	1
@@ -89,23 +89,23 @@ Norway2020-02	7	1
 Norway2020-03	19	1
 Pakistan2020-03	2	2
 Peru2020-03	1	1
-Poland2020-03	14	4
+Poland2020-03	14	3
 Poland2020-04	1	1
 Portugal2020-03	100	8
 Qatar2020-03	10	7
-Russia2020-03	77	34
-Russia2020-04	74	33
+Russia2020-03	77	33
+Russia2020-04	74	34
 Saudi Arabia2020-03	3	3
-Senegal2020-02	1	0
-Senegal2020-03	21	1
-Singapore2020-01	6	2
-Singapore2020-02	20	1
+Senegal2020-02	1	1
+Senegal2020-03	21	0
+Singapore2020-01	6	1
+Singapore2020-02	20	2
 Singapore2020-03	29	2
 Singapore2020-04	19	2
 Slovakia2020-03	4	0
 Slovenia2020-03	4	0
-South Africa2020-03	3	2
-South Africa2020-04	3	1
+South Africa2020-03	3	1
+South Africa2020-04	3	2
 South Korea2020-01	5	2
 South Korea2020-02	30	1
 Spain2020-02	7	7
@@ -115,8 +115,8 @@ Sweden2020-02	1	1
 Sweden2020-03	49	5
 Sweden2020-04	2	2
 Switzerland2020-02	23	3
-Switzerland2020-03	39	3
-Switzerland2020-04	10	2
+Switzerland2020-03	39	2
+Switzerland2020-04	10	3
 Taiwan2020-01	7	0
 Taiwan2020-02	6	0
 Taiwan2020-03	55	0
@@ -126,12 +126,12 @@ Turkey2020-03	26	26
 Turkey2020-04	3	3
 USA2020-01	12	12
 USA2020-02	64	64
-USA2020-03	2209	149
-USA2020-04	341	157
+USA2020-03	2209	152
+USA2020-04	341	154
 United Kingdom2020-01	2	2
-United Kingdom2020-02	31	17
-United Kingdom2020-03	3125	22
-United Kingdom2020-04	85	22
+United Kingdom2020-02	31	21
+United Kingdom2020-03	3125	21
+United Kingdom2020-04	85	19
 Uruguay2020-03	8	0
 Uruguay2020-04	1	0
 Vietnam2020-01	4	0
