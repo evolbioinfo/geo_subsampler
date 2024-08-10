@@ -117,11 +117,8 @@ def main():
     parser.add_argument('--metadata', required=True, type=str,
                         help='Path to the metadata table containing location and date annotations, '
                              'in a tab-delimited format.')
-    parser.add_argument('--sep', type=str, default='\t',
-                        help='Separator used in the metadata and case tables. '
-                             'By default a tab-separated table is assumed.')
     parser.add_argument('--index_column', type=int, default=0,
-                        help='number (starting from zero) of the index column (containing tree tip names) '
+                        help='Number (starting from zero) of the index column (containing tree tip names) '
                              'in the metadata table. '
                              'By default is the first column (corresponding to the number 0)')
     parser.add_argument('--location_column', type=str, default='country',
@@ -129,9 +126,13 @@ def main():
     parser.add_argument('--date_column', type=str, default='date',
                         help='name of the column containing date annotations in the metadata table.')
     parser.add_argument('--cases', required=True, type=str,
-                        help='A tab-separated file with two columns. The first column lists the locations, '
+                        help='Path to the case count table, in a tab-separated format, with two columns. '
+                             'The first column lists the locations, '
                              'while the second column contains the numbers of declared cases or proportions '
                              'for the corresponding locations')
+    parser.add_argument('--sep', type=str, default='\t',
+                        help='Separator used in the metadata and case tables. '
+                             'By default tab-separated tables are assumed.')
     parser.add_argument('--start_date', default=None, type=str,
                         help='If specified, all the cases before this date '
                              'will be included in all the sub-sampled data sets.')
