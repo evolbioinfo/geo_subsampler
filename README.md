@@ -75,16 +75,20 @@ The resulting tree is put into [example_data/results](example_data/results) fold
 
 ## Detailed options
 - **--tree TREE**           Path to the input phylogeny (NOT time-scaled) in newick format.
+- 
 - **--metadata METADATA**   Path to the metadata table containing location and date annotations, in a tab-delimited format.
-- **--sep SEP**             Separator used in the metadata and case tables. By default a tab-separated table is assumed.
 - **--index_column INDEX_COLUMN**
                         number (starting from zero) of the index column (containing tree tip names) in the metadata table. By default is the first column (corresponding to the number 0)
 - **--location_column LOCATION_COLUMN**
                         name of the column containing location annotations in the metadata table.
 - **--date_column DATE_COLUMN**
                         name of the column containing date annotations in the metadata table.
-- **--cases CASES**         A tab-separated file with two columns. The first column lists the locations, while the second column contains the numbers of declared cases or proportions for the
+- **--cases CASES**     Path to the case count table, in a tab-separated
+                        format, with two columns. The first column lists the
+                        locations, while the second column contains the
+                        numbers of declared cases or proportions for the
                         corresponding locations
+- **--sep SEP**             Separator used in the metadata and case tables. By default, tab-separated tables are assumed.
 - **--start_date START_DATE**
                         If specified, all the cases before this date will be included in all the sub-sampled data sets.
 - **--size SIZE**           Target size of the sub-sampled data set (in number of samples). By default, will be set to a half of the data set represented by the input tree.
@@ -94,5 +98,5 @@ The resulting tree is put into [example_data/results](example_data/results) fold
 - **--min_cases MIN_CASES**
                         Minimum number of samples to retain for each location.
 - **--date_precision {year,month,day}**
-                        Precision for homogeneous subsampling over time within each location. By default (month) will aim at distributing selected location samples equally over months.
+                        Precision for homogeneous subsampling over time within each location. By default (month), will aim at distributing selected location samples equally over months.
 
