@@ -27,7 +27,7 @@ pip3 install geo_subsampler
 
 ## Input data
 As an input, one needs to provide a **NON**-dated phylogenetical tree in [newick](https://en.wikipedia.org/wiki/Newick_format) format,
-a metadata table containing tip names, locations and states, 
+a metadata table containing tip names, locations and dates, 
 in tab-delimited (by default) or csv format (to be specified with *'--sep ,'* option).
 To subsample according to user-specified proportions, one should also input a location case counts, 
 as tab(or comma, see above)-separated table whose first column contains locations and the second case counts.
