@@ -27,10 +27,10 @@ pip3 install geo_subsampler
 
 ## Input data
 As an input, one needs to provide a **NON**-dated phylogenetical tree in [newick](https://en.wikipedia.org/wiki/Newick_format) format,
-a metadata table containing tip names, locations and dates, 
+a metadata table containing tip names, locations and sampling dates, 
 in tab-delimited (by default) or csv format (to be specified with *'--sep ,'* option).
 To subsample according to user-specified proportions, one should also input a location case counts, 
-as tab(or comma, see above)-separated table whose first column contains locations and the second case counts.
+as tab(or comma, see the Detailed options below)-separated table whose first column contains locations and the second case counts.
 
 ### Example
 The folder [example_data](example_data) contains an example of an input tree ([covid.nwk](example_data/covid.nwk)) 
@@ -75,7 +75,6 @@ The resulting tree is put into [example_data/results](example_data/results) fold
 
 ## Detailed options
 - **--tree TREE**           Path to the input phylogeny (NOT time-scaled) in newick format.
-- 
 - **--metadata METADATA**   Path to the metadata table containing location and date annotations, in a tab-delimited format.
 - **--index_column INDEX_COLUMN**
                         number (starting from zero) of the index column (containing tree tip names) in the metadata table. By default is the first column (corresponding to the number 0)
@@ -89,14 +88,10 @@ The resulting tree is put into [example_data/results](example_data/results) fold
                         numbers of declared cases or proportions for the
                         corresponding locations
 - **--sep SEP**             Separator used in the metadata and case tables. By default, tab-separated tables are assumed.
-- **--start_date START_DATE**
-                        If specified, all the cases before this date will be included in all the sub-sampled data sets.
+- **--start_date START_DATE** If specified, all the cases before this date will be included in all the sub-sampled data sets.
 - **--size SIZE**           Target size of the sub-sampled data set (in number of samples). By default, will be set to a half of the data set represented by the input tree.
 - **--repetitions REPETITIONS** Number of sub-sampled trees to produce. By default 1.
-- **--output_dir OUTPUT_DIR**
-                        Path to the directory where the sub-sampled results should be saved.
-- **--min_cases MIN_CASES**
-                        Minimum number of samples to retain for each location.
-- **--date_precision {year,month,day}**
-                        Precision for homogeneous subsampling over time within each location. By default (month), will aim at distributing selected location samples equally over months.
+- **--output_dir OUTPUT_DIR**  Path to the directory where the sub-sampled results should be saved.
+- **--min_cases MIN_CASES** Minimum number of samples to retain for each location.
+- **--date_precision {year,month,day}** Precision for homogeneous subsampling over time within each location. By default (month), will aim at distributing selected location samples equally over months.
 
